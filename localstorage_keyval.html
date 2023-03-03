@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The Window Object</h1>
+<h2>The localStorage Property</h2>
+
+<!-- <button onclick="showData()">Click Me</button> -->
+
+<p>welcome <span id="welcomeMessage"></span> </p>
+
+
+<form id="contactForm"  method="POST">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email">
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea name="message" id="message"></textarea>
+    </div>
+    <div class="field">
+      <input type="submit" onclick="SetData()" value="send">
+    </div>
+  </form>
+<br>
+<br>
+  <button onclick="delData()"> Signout</button>
+<script>
+ function SetData() {
+
+  // Check for LocalStorage support.
+  if (localStorage) {
+
+    // Add an event listener for form submissions
+    document.getElementById('contactForm').addEventListener('submit', function() {
+      // Get the value of the name field.
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var message = document.getElementById('message').value;
+      var getData = 
+            {
+            "name":name,
+            "email":email,
+            "message": message
+            }
+            localStorage.setItem('dataKey', JSON.stringify(getData ));
+    });
+
+  }
+
+}
+
+  // Retrieve the users name.
+
+    let val = localStorage.getItem('dataKey');
+    console.log(val,"------------------")
+    let jsonObj = JSON.parse(val);
+    console.log(jsonObj.name,'==============')
+    document.getElementById("welcomeMessage").innerHTML=jsonObj.name;
+
+
+   
+  
+  
+
+function delData()
+{
+    localStorage.removeItem('dataKey');
+   
+    window.location.reload();
+}
+</script>
+
+</body>
+</html>
